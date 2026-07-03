@@ -20,14 +20,6 @@ def load_nlp_models():
     clf = joblib.load("note_classifier.pkl")
     return vec, clf
 
-@st.cache_resource
-def load_xray_model():
-    try:
-        import tensorflow as tf
-        return tf.keras.models.load_model("xray_model.keras")
-    except Exception as e:
-        return None
-
 st.title("🩺 MediLens AI")
 st.caption("AI Diagnostic & Insight System")
 st.warning("⚠️ This is a prototype only. Not a substitute for medical advice.")
@@ -93,29 +85,8 @@ with tab1:
 # TAB 2
 with tab2:
     st.subheader("Chest X-Ray Pneumonia Screening")
-    uploaded_img = st.file_uploader("Upload X-ray image", type=["jpg", "jpeg", "png"])
-
-    if uploaded_img is not None:
-        from PIL import Image
-        xray_model = load_xray_model()
-
-    if xray_model is None:
-        st.warning("⚠️ X-Ray screening requires TensorFlow which is not supported in cloud deployment. Please watch the demo video for full functionality.")
-        st.info("📹 Demo Video: [Click here to watch] https://youtu.be/zmIU0_FVQr4 ")
-    else:
-        img = Image.open(uploaded_img).convert("RGB").resize((160, 160))
-        col1, col2 = st.columns(2)
-        with col1:
-            st.image(img, caption="Uploaded X-ray")
-        arr = np.expand_dims(np.array(img), axis=0).astype("float32")
-        proba = float(xray_model.predict(arr, verbose=0).flatten()[0])
-        pred_label = "PNEUMONIA" if proba > 0.5 else "NORMAL"
-        confidence = proba if proba > 0.5 else 1 - proba
-        with col2:
-            if pred_label == "PNEUMONIA":
-                st.error(f"Prediction: Pneumonia ({confidence:.1%} confidence)")
-            else:
-                st.success(f"Prediction: Normal ({confidence:.1%} confidence)")
+    st.warning("⚠️ X-Ray screening requires TensorFlow which is not supported in cloud deployment.")
+    st.info("📹 Please watch the demo video for full X-Ray functionality.")
 
 # TAB 3
 with tab3:
