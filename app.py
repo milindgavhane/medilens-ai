@@ -9,22 +9,22 @@ st.set_page_config(page_title="MediLens AI", page_icon="🩺", layout="wide")
 
 @st.cache_resource
 def load_diabetes_models():
-    model = joblib.load("models/best_model.pkl")
-    scaler = joblib.load("models/scaler.pkl")
-    feature_names = joblib.load("models/feature_names.pkl")
+    model = joblib.load("best_model.pkl")
+    scaler = joblib.load("scaler.pkl")
+    feature_names = joblib.load("feature_names.pkl")
     return model, scaler, feature_names
 
 @st.cache_resource
 def load_nlp_models():
-    vec = joblib.load("models/tfidf_vectorizer.pkl")
-    clf = joblib.load("models/note_classifier.pkl")
+    vec = joblib.load("tfidf_vectorizer.pkl")
+    clf = joblib.load("note_classifier.pkl")
     return vec, clf
 
 @st.cache_resource
 def load_xray_model():
     try:
         import tensorflow as tf
-        return tf.keras.models.load_model("models/xray_model.keras")
+        return tf.keras.models.load_model("xray_model.keras")
     except Exception as e:
         return None
 
