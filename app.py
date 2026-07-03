@@ -86,7 +86,7 @@ with tab1:
 with tab2:
     st.subheader("Chest X-Ray Pneumonia Screening")
     st.warning("⚠️ X-Ray screening requires TensorFlow which is not supported in cloud deployment.")
-    st.info("📹 Please watch the demo video for full X-Ray functionality.")
+    st.info("📹 Please watch the demo video for full X-Ray functionality.\n https://youtu.be/zmIU0_FVQr4")
 
 # TAB 3
 with tab3:
