@@ -102,20 +102,20 @@ with tab2:
     if xray_model is None:
         st.warning("⚠️ X-Ray screening requires TensorFlow which is not supported in cloud deployment. Please watch the demo video for full functionality.")
         st.info("📹 Demo Video: [Click here to watch] https://youtu.be/zmIU0_FVQr4 ")
-        else:
-            img = Image.open(uploaded_img).convert("RGB").resize((160, 160))
-            col1, col2 = st.columns(2)
-            with col1:
-                st.image(img, caption="Uploaded X-ray")
-            arr = np.expand_dims(np.array(img), axis=0).astype("float32")
-            proba = float(xray_model.predict(arr, verbose=0).flatten()[0])
-            pred_label = "PNEUMONIA" if proba > 0.5 else "NORMAL"
-            confidence = proba if proba > 0.5 else 1 - proba
-            with col2:
-                if pred_label == "PNEUMONIA":
-                    st.error(f"Prediction: Pneumonia ({confidence:.1%} confidence)")
-                else:
-                    st.success(f"Prediction: Normal ({confidence:.1%} confidence)")
+    else:
+        img = Image.open(uploaded_img).convert("RGB").resize((160, 160))
+        col1, col2 = st.columns(2)
+        with col1:
+            st.image(img, caption="Uploaded X-ray")
+        arr = np.expand_dims(np.array(img), axis=0).astype("float32")
+        proba = float(xray_model.predict(arr, verbose=0).flatten()[0])
+        pred_label = "PNEUMONIA" if proba > 0.5 else "NORMAL"
+        confidence = proba if proba > 0.5 else 1 - proba
+        with col2:
+            if pred_label == "PNEUMONIA":
+                st.error(f"Prediction: Pneumonia ({confidence:.1%} confidence)")
+            else:
+                st.success(f"Prediction: Normal ({confidence:.1%} confidence)")
 
 # TAB 3
 with tab3:
