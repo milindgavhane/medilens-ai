@@ -99,8 +99,9 @@ with tab2:
         from PIL import Image
         xray_model = load_xray_model()
 
-        if xray_model is None:
-            st.error("TensorFlow not available in this environment.")
+    if xray_model is None:
+        st.warning("⚠️ X-Ray screening requires TensorFlow which is not supported in cloud deployment. Please watch the demo video for full functionality.")
+        st.info("📹 Demo Video: [Click here to watch] https://youtu.be/zmIU0_FVQr4 ")
         else:
             img = Image.open(uploaded_img).convert("RGB").resize((160, 160))
             col1, col2 = st.columns(2)
